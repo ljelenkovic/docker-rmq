@@ -1,0 +1,68 @@
+[
+	{
+		"name" : "node-1",
+
+		"loop-start" : {
+			"type" : "periodic",
+			"period" : 5,
+			"initial-delay" : 3
+		},
+
+		"input" : {
+			"type" : "GEN-SEQ",
+			"prefix" : "{n1}"
+		},
+
+		"loop-processing" : {
+			"type" : "fixed",
+			"duration" : 0,
+			"initial-value" : 1000
+		},
+
+		"output" : {
+			"type" : "queue",
+			"name" : "q1",
+			"append" : "{n1}"
+		}
+
+	},
+	{
+		"name" : "node-2",
+
+		"input" : {
+			"type" : "queue",
+			"name" : "q1"
+		},
+
+		"loop-processing" : {
+			"type" : "fixed",
+			"duration" : 2,
+			"initial-value" : 2000
+		},
+
+		"output" : {
+			"type" : "queue",
+			"name" : "q2",
+			"append" : "{n2}"
+		}
+	},
+	{
+		"name" : "node-3",
+
+		"input" : {
+			"type" : "queue",
+			"name" : "q2"
+		},
+
+		"loop-processing" : {
+			"type" : "fixed",
+			"duration" : 2,
+			"initial-value" : 3000
+		},
+
+		"output" : {
+			"type" : "STDOUT",
+			"append" : "{n3}"
+		}
+	}
+]

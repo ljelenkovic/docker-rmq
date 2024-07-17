@@ -10,3 +10,10 @@ U "00-hello" je primjer "Hello world" koji koristi tri kontejnera:
 3. Python program koji prima poruke
 
 U "upute.txt" nalaze se upute kako sve posložiti.
+
+## 01-chain
+Primjer tri aplikacije:
+- prva (node-1) generira podatke i šalje ih u red mq1
+- druga čita iz mq1, "obrađuje" i šalje u mq2
+- treća čita iz mq2, "obrađuje" i šalje "van" (ispiše)
+
