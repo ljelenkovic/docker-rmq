@@ -35,9 +35,9 @@ def mq_setup_input_queue():
 		input.append(msg)
 		bsem_input.release()
 		sem_input.release()
-		channel.basic_ack(delivery_tag=method_frame.delivery_tag)
 		#wait for message to be consumed?
 		sem_input_consumed.acquire()
+		channel.basic_ack(delivery_tag=method_frame.delivery_tag)
 
 	def input_thread():
 		input_mq = pika.BlockingConnection(

@@ -11,3 +11,25 @@
   * imati više instanci korisnih aplikacija - ako jedna i padne neka druga će nastaviti s radom
   * imati backup instance koje kreću samo ako nešto ne valja s početnom
   *
+
+dodaci sa sastanka:
+
+upravljanje kontejnerima izravno kroz docker i yaml
+- s više slika
+- tko o kome ovisi
+- što kad aplikacija padne (restart?)
+- ?
+
+detekcija problema kroz RabbitMQ preko TTLa na poruke
+- routat takve poruke u neki poseban exchange...
+
+prema opterećenju podizati nove čvorove,
+- prema broju poruka u queue (npr. postaviti MAX broj poruka u RabbitMQ ...)
+- ?
+
+ulazni čvorovi:
+- od drugih sustava (modelirati ih kao sporadične/aperiodičke)
+- periodičke (generiraju se unutar sustava)
+- ?
+
+izlazi na tip fanout da se logiraju svi događaji koji idu iz sustava
