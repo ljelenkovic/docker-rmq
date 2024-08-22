@@ -1,0 +1,35 @@
+1. Pokreni rabbitmq u zasebnoj konzoli
+$ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
+
+2. Napravi Dockerfile
+-----------------------------------------------------------------
+# syntax=docker/dockerfile:1
+
+FROM python
+RUN python3 -m pip install pika --upgrade
+
+CMD ["readme.py"]
+ENTRYPOINT ["python3"]
+-----------------------------------------------------------------
+
+3. Napravi sliku 'python-client'
+$ docker build -t python-client .
+
+4. Iz trenutnog direktorija (gdje su python programi) pokreni "programe" kao kontejnere (najbolje u zasebnim terminalima):
+$ docker run --net="host" --name node-1 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-1
+$ docker run --net="host" --name node-2 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-2
+$ docker run --net="host" --name node-3 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-3
+
+- node-X je ime kontejnera (kad se pokrene, X iz {1,2,3})
+- trenutni direktorij se mapira u /app u kontejneru
+- node.py je ime python datoteke u ovom direktoriju koji se želi pokrenuti
+
+
+Ili sve u istom terminalu, jedno za drugim (c/p ovaj tekst u konzolu)
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management &
+sleep 15
+rm -f log.txt
+docker run --net="host" --name node-3 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-3 &
+docker run --net="host" --name node-2 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-2 &
+docker run --net="host" --name node-1 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-1 &
+tail -f log.txt

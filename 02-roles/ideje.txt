@@ -1,0 +1,35 @@
+﻿Mogućnosti kontrole/praćenja rada aplikacija:
+- kroz mogućnosti RabbitMQ-a (proučiti detaljnije)
+- kroz praćenje rada kontejnera/dockera
+  * koristiti nešto gotovo (kubernetes ili možda onaj novi sustav Cyclops)
+  * "ručno" kroz docker naredbe
+- unutar kontejnera dodati aplikacije koje prate one korisne
+  a. ako se sruši, restartati
+  b. aktivno pratiti, nešto ala watchdog timer
+
+- redundantne aplikacije
+  * imati više instanci korisnih aplikacija - ako jedna i padne neka druga će nastaviti s radom
+  * imati backup instance koje kreću samo ako nešto ne valja s početnom
+  *
+
+dodaci sa sastanka:
+
+upravljanje kontejnerima izravno kroz docker i yaml
+- s više slika
+- tko o kome ovisi
+- što kad aplikacija padne (restart?)
+- ?
+
+detekcija problema kroz RabbitMQ preko TTLa na poruke
+- routat takve poruke u neki poseban exchange...
+
+prema opterećenju podizati nove čvorove,
+- prema broju poruka u queue (npr. postaviti MAX broj poruka u RabbitMQ ...)
+- ?
+
+ulazni čvorovi:
+- od drugih sustava (modelirati ih kao sporadične/aperiodičke)
+- periodičke (generiraju se unutar sustava)
+- ?
+
+izlazi na tip fanout da se logiraju svi događaji koji idu iz sustava

@@ -1,0 +1,138 @@
+{
+	"queues" : [
+		{
+			"exchange" : "ex-1",
+			"queues": [ "q1", "q3" ]
+		},
+		{
+			"exchange" : "ex-2",
+			"queues": [ "q2", "q3" ]
+		}
+	],
+
+	"nodes" :
+	[
+		{
+			"name" : "EXT-in-1",
+
+			"input" : {
+				"type" : "GEN-MSG",
+				"interval": {
+					"type" : "deterministic",
+					"time" : 5
+				},
+				"initial-delay" : 3,
+				"prefix" : "{E1}"
+			},
+
+			"processing" : {
+				"duration" : {
+					"type" : "deterministic",
+					"time" : 0
+				},
+				"initial-value" : 1000,
+				"append" : "{E1}"
+			},
+
+			"output" : {
+				"type" : "exchange",
+				"name" : "ex-1"
+			}
+		},
+
+		{
+			"name" : "Node-1",
+
+			"input" : {
+				"type" : "queue",
+				"exchanges" : ["ex-1"],
+				"queue" : "q1"
+			},
+
+			"processing" : {
+				"duration" : {
+					"type" : "deterministic",
+					"time" : 2
+				},
+				"initial-value" : 2000,
+				"append" : "{N1}"
+			},
+
+			"output" : {
+				"type" : "queue",
+				"exchange" : "ex-2"
+			}
+
+		},
+
+		{
+			"name" : "Node-2",
+
+			"input" : {
+				"type" : "queue",
+				"exchanges" : ["ex-1"],
+				"queue" : "q1"
+			},
+
+			"processing" : {
+				"duration" : {
+					"type" : "deterministic",
+					"time" : 2
+				},
+				"initial-value" : 2000,
+				"append" : "{N1}"
+			},
+
+			"output" : {
+				"type" : "queue",
+				"exchange" : "ex-2"
+			}
+
+		},
+
+		{
+			"name" : "Node-3",
+
+			"input" : {
+				"type" : "queue",
+				"exchanges" : ["ex-1", "ex-2"],
+				"queue" : "q3"
+			},
+
+			"processing" : {
+				"duration" : {
+					"type" : "deterministic",
+					"time" : 2
+				}
+			},
+
+			"output" : {
+				"type" : "log",
+				"name" : "log.txt"
+			}
+
+		},
+
+		{
+			"name" : "EXT-out-1",
+
+			"input" : {
+				"type" : "queue",
+				"exchanges" : ["ex-1", "ex-2"],
+				"queue" : "q3"
+			},
+
+			"processing" : {
+				"duration" : {
+					"type" : "deterministic",
+					"time" : 2
+				}
+			},
+
+			"output" : {
+				"type" : "STDOUT"
+			}
+
+		}
+	]
+}
