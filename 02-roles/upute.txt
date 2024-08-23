@@ -15,6 +15,8 @@ ENTRYPOINT ["python3"]
 3. Napravi sliku 'python-client'
 $ docker build -t python-client .
 
+FIXME - nije ažurirano
+
 4. Iz trenutnog direktorija (gdje su python programi) pokreni "programe" kao kontejnere (najbolje u zasebnim terminalima):
 $ docker run --net="host" --name node-1 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-1
 $ docker run --net="host" --name node-2 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-2
