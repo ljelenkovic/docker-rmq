@@ -15,23 +15,30 @@ ENTRYPOINT ["python3"]
 3. Napravi sliku 'python-client'
 $ docker build -t python-client .
 
-FIXME - nije ažurirano
-
 4. Iz trenutnog direktorija (gdje su python programi) pokreni "programe" kao kontejnere (najbolje u zasebnim terminalima):
-$ docker run --net="host" --name node-1 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-1
-$ docker run --net="host" --name node-2 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-2
-$ docker run --net="host" --name node-3 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-3
 
-- node-X je ime kontejnera (kad se pokrene, X iz {1,2,3})
+docker run --net="host" --name EXT-i1 --rm -v $(pwd):/app -w /app -i -t python-client node.py EXT-i1
+docker run --net="host" --name Node-1 --rm -v $(pwd):/app -w /app -i -t python-client node.py Node-1
+docker run --net="host" --name Node-2 --rm -v $(pwd):/app -w /app -i -t python-client node.py Node-2
+docker run --net="host" --name Node-3 --rm -v $(pwd):/app -w /app -i -t python-client node.py Node-3
+docker run --net="host" --name EXT-o1 --rm -v $(pwd):/app -w /app -i -t python-client node.py EXT-o1
+
 - trenutni direktorij se mapira u /app u kontejneru
 - node.py je ime python datoteke u ovom direktoriju koji se želi pokrenuti
 
-
 Ili sve u istom terminalu, jedno za drugim (c/p ovaj tekst u konzolu)
+
 docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management &
 sleep 15
-rm -f log.txt
-docker run --net="host" --name node-3 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-3 &
-docker run --net="host" --name node-2 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-2 &
-docker run --net="host" --name node-1 --rm -v $(pwd):/app -w /app -i -t python-client node.py node-1 &
+rm -f log.txt out.txt
+docker run --net="host" --name Node-1 --rm -v $(pwd):/app -w /app -i -t python-client node.py Node-1 &
+docker run --net="host" --name Node-2 --rm -v $(pwd):/app -w /app -i -t python-client node.py Node-2 &
+docker run --net="host" --name Node-3 --rm -v $(pwd):/app -w /app -i -t python-client node.py Node-3 &
+docker run --net="host" --name EXT-o1 --rm -v $(pwd):/app -w /app -i -t python-client node.py EXT-o1 &
+docker run --net="host" --name EXT-i1 --rm -v $(pwd):/app -w /app -i -t python-client node.py EXT-i1 &
+sleep 5
 tail -f log.txt
+
+Za zaustavljanje napraviti:
+
+docker stop EXT-i1 Node-1 Node-2 Node-3 EXT-o1 rabbitmq

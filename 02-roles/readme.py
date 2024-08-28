@@ -1,3 +1,3 @@
-print("dodaj ime python datoteke kao argument pri pokretanju")
-print("npr. docker run ..... python-client node.py node-1")
-print("Pogledaj upute.txt")
+print("Add Python program file name as argument when starting.")
+print("For example: docker run ..... python-client node.py node-1")
+print("Details in upute.txt")

@@ -12,15 +12,14 @@
 		}
 	],
 
-	"EXT-in-1" : {
+	"EXT-i1" : {
 		"input" : {
 			"type" : "GEN-MSG",
 			"interval": {
 				"type" : "deterministic",
 				"time" : 5
 			},
-			"initial-delay" : 3,
-			"prefix" : "{E1}"
+			"initial-delay" : 3
 		},
 
 		"processing" : {
@@ -28,8 +27,7 @@
 				"type" : "deterministic",
 				"time" : 0
 			},
-			"initial-value" : 1000,
-			"append" : "{E1}"
+			"initial-value" : 1000
 		},
 
 		"output" : {
@@ -50,8 +48,7 @@
 				"type" : "deterministic",
 				"time" : 2
 			},
-			"initial-value" : 2000,
-			"append" : "{N1}"
+			"initial-value" : 2000
 		},
 
 		"output" : {
@@ -72,8 +69,7 @@
 				"type" : "deterministic",
 				"time" : 2
 			},
-			"initial-value" : 2000,
-			"append" : "{N1}"
+			"initial-value" : 2000
 		},
 
 		"output" : {
@@ -94,7 +90,8 @@
 			"duration" : {
 				"type" : "deterministic",
 				"time" : 2
-			}
+			},
+			"initial-value" : 3000
 		},
 
 		"output" : {
@@ -103,18 +100,15 @@
 
 	},
 
-	"EXT-out-1" : {
+	"EXT-o1" : {
 		"input" : {
 			"type" : "queue",
-			"exchanges" : ["ex-1", "ex-2"],
-			"queue" : "q3"
+			"exchanges" : ["ex-2"],
+			"queue" : "q2"
 		},
 
 		"processing" : {
-			"duration" : {
-				"type" : "deterministic",
-				"time" : 2
-			}
+			"skip" : true
 		},
 
 		"output" : {
